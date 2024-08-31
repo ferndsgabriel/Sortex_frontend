@@ -1,7 +1,3 @@
-import { FaSpinner } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { AiOutlineEyeInvisible } from "react-icons/ai";
-import { IoEyeSharp } from "react-icons/io5";
 import logo from "../../assets/logo.svg";
 import icon from "../../assets/icon.svg";
 import { useState, useContext, useRef, FormEvent } from "react";
@@ -11,6 +7,10 @@ import axios, { AxiosError } from "axios";
 import {isEmail} from "validator";
 import { Link } from "react-router-dom";
 import { toast } from 'react-toastify';
+
+import ButtonGoogle from "../../components/ui/buttonGoogle";
+import ButtonGreen from "../../components/ui/buttonGreen";
+import Input from "../../components/ui/input";
 
 interface TokenInfo {
     iss: string;
@@ -33,7 +33,6 @@ interface TokenInfo {
 
 
 export default function Home(){
-    const [isVisible, setIsVisible] = useState(false);
     const {handleLogin} = useContext(AuthContext);
     const passRef = useRef<HTMLInputElement>(null);
     const emailRef = useRef<HTMLInputElement>(null);
@@ -110,42 +109,20 @@ export default function Home(){
                     </div>
 
                     <form className="flex flex-col w-full gap-6 mt-8" onSubmit={login}>
-                        <label className="flex flex-col gap-2">
-                            <span className="font-bold">Email</span>
-                            <input className="p-2 border-2 border-solid rounded-md focus:border-solid focus:border-neutral-500 focus:border-2 border-neutral-200 placeholder:text-neutral-500" 
-                            type="text" placeholder="email@example.com" required={true} minLength={6} maxLength={60}
-                            ref={emailRef}/>
-                        </label>
 
-                        <div>
-                            <label className="flex flex-col gap-2">
-                                <span className="font-bold">Senha</span>
-                                <input className="p-2 border-2 border-solid rounded-md focus:border-solid focus:border-neutral-500 focus:border-2 border-neutral-200 placeholder:text-neutral-500" 
-                                type={!isVisible? 'password' : 'text'} placeholder="********"  required={true} minLength={6} maxLength={30}
-                                ref={passRef}/>
-                            </label>
-                            <button className="mt-4 text-xl" type="button" disabled={loadingButton}
-                                onClick={()=>setIsVisible(!isVisible)}>
-                                    {!isVisible ?(
-                                        <AiOutlineEyeInvisible/>
-                                    ):( 
-                                        <IoEyeSharp/>
-                                    )}
-                            </button>
-                        </div>
+                        <Input text="Email" type="email" placeholder="email@example.com" 
+                        required={true} minLength={6} maxLength={60}  ref={emailRef}/>
 
-                        {!loadingButton?(
-                            <button className="p-3 font-semibold text-white duration-200 rounded-md bg-main hover:bg-maindark" 
-                            type="submit">Entrar</button>
-                        ):(
-                            <FaSpinner className="self-center text-xl text-main animate-spin"/>
-                        )}
+                        <Input text="Senha" type="password" placeholder="********"
+                        required={true} minLength={6} maxLength={60} ref={passRef}/>
+                        
+                        <ButtonGreen disabled={loadingButton}>
+                            Entrar
+                        </ButtonGreen>
 
-
-                        <button onClick={()=>loginGoogle()} disabled={loadingButton}
-                        className="flex items-center self-start gap-4 p-2 duration-200 border-2 border-solid rounded-md hover:border-neutral-500 border-neutral-200">
-                            <  FcGoogle  /> <span>Logar com google</span>
-                        </button>
+                        <ButtonGoogle disabled={loadingButton} onClick={()=>loginGoogle()} width="fit" >
+                            Logar com google
+                        </ButtonGoogle>
 
                         <span className="self-center w-full text-center text-neutral-500 max-w-96" 
                         >Não tem uma conta? <Link to={'/signup'} className="underline hover:text-black">Cadastre-se</Link> ou esqueceu sua senha? <Link to={'/recovery'} className="underline hover:text-black">Recuperar</Link>

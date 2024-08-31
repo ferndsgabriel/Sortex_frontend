@@ -10,7 +10,8 @@ type AuthContextData = {
     handleLogin:(credentials:LoginProps)=> Promise <void>;
     handleRegister:(credentials:SignupProps) => Promise <void>;
     logout:()=>void;
-    isAuthenticated:boolean
+    isAuthenticated:boolean;
+    user:UserProps | undefined;
 }
 
 type AuthProviderProps = {
@@ -74,7 +75,7 @@ export default function AuthProvider({children}:AuthProviderProps) {
 
             setUser(userData);
 
-            setCookie(undefined, '@sortex', token, {
+            setCookie(undefined, '@Sortex', token, {
                 maxAge: 30 * 24 * 60 * 60,
                 path: '/',
             });
@@ -112,22 +113,21 @@ export default function AuthProvider({children}:AuthProviderProps) {
         }
     }
 
-
-    function logout(){
+    function logout() {
         try {
-            destroyCookie(null, '@Sortex');
+            destroyCookie(null, '@Sortex', { path: '/' });
             setUser(undefined);
         } catch (error) {
-            console.log(error);
+        console.log(error);
         }
     }
     
     useEffect(()=>{
         async function getUserAuth(){
-            logout ()
             const {'@Sortex':authToken} = parseCookies();
 
             if (!authToken){
+                console.log('falta de token')
                 logout();
             }
 
@@ -140,10 +140,12 @@ export default function AuthProvider({children}:AuthProviderProps) {
                 const sessionParse = sessionStorage ? JSON.parse(sessionStorage ) : '';
 
                 if (dbToken !== sessionParse){
+                    console.log('Senha foi alterada');
                     logout();
                 }
             } catch (error) {
                 console.log(error);
+                console.log('Erro ao obter dados');
                 logout();
             }finally{
                 setLoadingPage(false);
@@ -158,7 +160,7 @@ export default function AuthProvider({children}:AuthProviderProps) {
     }
 
     return(
-        <AuthContext.Provider value={{handleLogin, handleRegister, isAuthenticated, logout}}>
+        <AuthContext.Provider value={{handleLogin, handleRegister, isAuthenticated, logout, user}}>
             {children}
         </AuthContext.Provider>
     )

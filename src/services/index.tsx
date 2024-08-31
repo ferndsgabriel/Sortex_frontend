@@ -9,7 +9,7 @@ export const SetupApi= (ctx = undefined) =>{
     const api = axios.create({
         baseURL:'http://localhost:3333',
         headers:{
-            Authorization: `Bearer ${cookies['@sortex']}`
+            Authorization: `Bearer ${cookies['@Sortex']}`
         }
     });
 

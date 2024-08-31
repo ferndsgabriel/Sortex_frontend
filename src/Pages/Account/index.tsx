@@ -1,11 +1,15 @@
 import Header from "../../components/header"
 import { useCallback, useEffect, useState } from "react";
 import { FaSpinner, FaRegCheckCircle  } from "react-icons/fa";
-import { IoQrCodeSharp} from "react-icons/io5";
 import { SetupApi } from "../../services";
 import LoadingPage from "../../components/loading";
 import {QRCodeSVG} from 'qrcode.react';
+
 import ModalDeleteMp from "../../components/modals/account/deleteMP";
+
+import ButtonGreen from "../../components/ui/buttonGreen";
+import ContainerPages from "../../components/ui/containerPages";
+import Title from "../../components/ui/titlePages";
 
 export default function Account (){
     const [loading, setLoading] = useState(true);
@@ -42,7 +46,6 @@ export default function Account (){
         try {
             const response = await api.get('/linksaller');
             setLinkedAccount(response.data.url); 
-            console.log(linkedAccount)
         } catch (error) {
             console.log(error)
         }finally{
@@ -63,11 +66,12 @@ export default function Account (){
     return(
         <>
             <Header/>
-            <main className="flex flex-col items-center gap-24 p-4 containerAdaptative">
-                <h1 className="self-start">Vincular conta</h1>
-            
+            <ContainerPages>
+
+                <Title text="Vincular conta"/>
+                
                 {cardId?(
-                    <section className="flex flex-col w-full max-w-lg gap-8 py-4 m-auto bg-white shadow-lg h-max">
+                    <section className="flex flex-col w-full max-w-lg gap-8 py-4 m-auto shadow-lg mt-36 h-max">
                     <h2 className="text-2xl font-semibold">
                         Conta bancária vinculada
                     </h2>
@@ -88,7 +92,7 @@ export default function Account (){
 
                 </section>
                 ):(
-                    <section className="flex flex-col w-full max-w-lg gap-8 p-4 py-4 m-auto bg-white shadow-lg -500 h-max">
+                    <section className="flex flex-col w-full max-w-lg gap-8 p-4 py-4 m-auto bg-white shadow-lg mt-36 -500 h-max">
                         <h2 className="text-2xl font-semibold">
                             Vincule sua conta bancária do mercado pago
                         </h2>
@@ -101,17 +105,14 @@ export default function Account (){
                             </div>
                         )}
                         
-                        {!loadingButton?(
-                            <button onClick={createQrCode} 
-                            className="flex items-center justify-center gap-4 p-3 font-semibold text-white duration-200 rounded-md bg-main hover:bg-maindark" 
-                            type="submit"><IoQrCodeSharp/>Gerar QRcode</button>
-                        ):(
-                            <FaSpinner className="self-center text-xl text-main animate-spin"/>
-                        )}
+                        <ButtonGreen onClick={createQrCode} disabled={loadingButton}>
+                            Gerar QRcode
+                        </ButtonGreen>
+                        
                     </section>
                 )}
 
-            </main>
+            </ContainerPages>
 
             < ModalDeleteMp isOpen={isOpenDelete} closeModal={closeDelete}/>
         </>

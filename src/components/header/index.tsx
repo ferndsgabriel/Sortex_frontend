@@ -9,15 +9,13 @@ import { AiFillProduct } from "react-icons/ai";
 import { MdPayments, MdInsights } from "react-icons/md";
 import { TiSocialAtCircular } from "react-icons/ti";
 import { FaPowerOff } from "react-icons/fa6";
-
+import noPhoto from "../../assets/noPhoto.jpg";
 
 export default function Header(){
     const navRef = useRef<HTMLDivElement>(null);
     const backgroundRef = useRef<HTMLDivElement>(null);
-    const {logout} = useContext(AuthContext);
+    const {logout, user} = useContext(AuthContext);
     const location = useLocation().pathname;
-
-    console.log(location)
 
     function openNav(){
         if (navRef.current){
@@ -42,6 +40,7 @@ export default function Header(){
         }
     }
     
+    console.log(user?.photo)
     return(
         <>
             <header className="fixed top-0 left-0 z-40 flex items-center justify-between w-full h-16 p-4 bg-main lg:hidden">
@@ -92,11 +91,11 @@ export default function Header(){
                         </Link>
                     </li>
                     <li className="w-full">
-                        <Link to={'/'} className="flex items-center w-full h-16 gap-4 text-white duration-200 hover:bg-maindark group">
+                        <Link to={'/sociais'} className="flex items-center w-full h-16 gap-4 text-white duration-200 hover:bg-maindark group">
                             <div className="flex items-center justify-center h-full text-2xl shadow-md group-hover:shadow-black bg-maindark aspect-square">
                                 <TiSocialAtCircular/>
                             </div>
-                            <span className={`${location === '/social' ? '' : 'opacity-70'}`}>Redes sociais</span>
+                            <span className={`${location === '/sociais' ? '' : 'opacity-70'}`}>Redes sociais</span>
                         </Link>
                     </li>
                     <li className="w-full">
@@ -108,7 +107,7 @@ export default function Header(){
                         </Link>
                     </li>
                     <li className="w-full">
-                        <Link to={'/'} className="flex items-center w-full h-16 gap-4 text-white duration-200 hover:bg-maindark group">
+                        <Link to={'/settings'} className="flex items-center w-full h-16 gap-4 text-white duration-200 hover:bg-maindark group">
                             <div className="flex items-center justify-center h-full text-2xl shadow-md group-hover:shadow-black bg-maindark aspect-square">
                                 <IoMdSettings/>
                             </div>
@@ -118,9 +117,18 @@ export default function Header(){
                 </ul>
             
                 <div className="flex items-end justify-center w-16 h-full text-white bg-maindark">
-                    <button onClick={logout} className="mb-16 hover:opacity-50">
-                        <FaPowerOff />
-                    </button>
+
+                    <div className="flex flex-col items-center w-full gap-4">
+                        
+                        {user && user.photo ?(
+                            <img src={user.photo} alt="foto de perfil do google" className="object-cover object-center w-full h-full p-4 rounded-full"/>
+                        ):(
+                            <img src={noPhoto} alt="sem foto" className="object-cover object-center w-full h-full p-4 rounded-full"/>
+                        )}
+                        <button onClick={logout} className="mb-16 text-2xl hover:opacity-50">
+                            <FaPowerOff />
+                        </button>
+                    </div>
                 </div>
 
             </nav>

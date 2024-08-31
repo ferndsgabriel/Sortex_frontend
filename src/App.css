@@ -20,18 +20,6 @@ button{
     }
 }
 
-.containerAdaptative{
-    margin-top: 64px;
-}
-.containerAdaptative h1{
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 16px;
-}
-@media (min-width:1024px){
-    .containerAdaptative{
-        width: calc(100% - 320px);
-        margin-left: 320px;
-        margin-top: 0px;
-    }   
+img{
+    user-select: none;
 }

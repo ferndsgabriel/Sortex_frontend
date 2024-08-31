@@ -1,5 +1,7 @@
 import { FormEvent, useState } from "react";
 import Modal from "../../default";
+import { SetupApi } from "../../../../services";
+import {toast} from "react-toastify";
 
 import FormModalContainer from "../../ui/formContainer";
 import TitleModal from "../../ui/titleModal";
@@ -7,6 +9,7 @@ import TextModal from "../../ui/text";
 import ButtonsContainer from "../../ui/buttonsContainer";
 import ButtonConfirm from "../../ui/buttonConfirm";
 import ButtonCancel from "../../ui/buttonCancel";
+import { AxiosError } from "axios";
 
 interface modalProps{
     closeModal: ()=>void;
@@ -14,10 +17,22 @@ interface modalProps{
 }
 
 export default function ModalDeleteMp({isOpen, closeModal}:modalProps){
+    const api = SetupApi();
     const [isLoading, setIsLoading] = useState(false);
 
     async function handleDelete(e:FormEvent){
         e.preventDefault();
+
+        setIsLoading(true);
+        try {
+            await api.delete('/account');
+            toast.success("Conta desvinculada com sucesso");    
+        } catch (error:AxiosError | any) {
+            toast.error(error.response.data.error);
+        }finally{
+            setIsLoading(false);
+            closeModal();
+        }
     }
 
     return(

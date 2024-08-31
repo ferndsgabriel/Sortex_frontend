@@ -14,6 +14,8 @@ import ChangePass from "./Pages/Changepass";
 // com autenticação
 import Start from "./Pages/Start";
 import Account from "./Pages/Account";
+import Sociais from "./Pages/Sociais";
+import Settings from "./Pages/Settings";
 
 const RoutesApp = ()=>{
 
@@ -25,6 +27,8 @@ const RoutesApp = ()=>{
                         <Route path="/*" element={<Navigate to={'/start'}/>} />
                         <Route path="/start" element={<Start />} />
                         <Route path="/account" element={<Account />} />
+                        <Route path="/sociais" element={<Sociais />} />
+                        <Route path="/settings" element={<Settings />} />
                     </>
                 ):(
                     <>

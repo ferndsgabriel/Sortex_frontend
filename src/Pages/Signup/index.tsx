@@ -1,6 +1,3 @@
-import { FaSpinner } from "react-icons/fa";
-import { AiOutlineEyeInvisible } from "react-icons/ai";
-import { IoEyeSharp } from "react-icons/io5";
 import logo from "../../assets/logo.svg";
 import icon from "../../assets/icon.svg";
 import { useState, useContext, useRef, FormEvent } from "react";
@@ -8,9 +5,12 @@ import { AuthContext } from "../../contexts/AuthContexts";
 import { useGoogleLogin  } from '@react-oauth/google';
 import axios, { AxiosError } from "axios";
 import { Link } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
 import { toast } from 'react-toastify';
 import zxcvbn from "zxcvbn";
+
+import ButtonGoogle from "../../components/ui/buttonGoogle";
+import ButtonGreen from "../../components/ui/buttonGreen";
+import Input from "../../components/ui/input";
 
 interface TokenInfo {
     iss: string;
@@ -39,7 +39,6 @@ interface dataGoogleProps{
 }
 
 export default function Cadastrar(){
-    const [isVisible, setIsVisible] = useState(false);
     const {handleRegister} = useContext(AuthContext);
     const passRef = useRef<HTMLInputElement>(null);
     const confirmPassRef = useRef<HTMLInputElement>(null);
@@ -106,7 +105,7 @@ export default function Cadastrar(){
                 }
                 setDataGoogle(data);
             }
-        },
+        }
     });
 
     return(
@@ -126,53 +125,24 @@ export default function Cadastrar(){
                     </div>
                     
                     <form className="flex flex-col w-full gap-6 mt-8" onSubmit={signup}>
+                        
                         {!dataGoogle &&(
-                            <button onClick={()=>signupGoogle()} disabled={loadingButton} type="button"
-                            className="flex items-center gap-4 p-2 duration-200 border-2 border-solid rounded-md hover:border-neutral-500 border-neutral-200">
-                                < FcGoogle /> <span>Cadastre-se com google</span>
-                            </button>
+                            <ButtonGoogle disabled={loadingButton} onClick={()=>signupGoogle()}>
+                                Cadastre-se com google
+                            </ButtonGoogle>
                             )}
 
                         {dataGoogle &&(
                             <>
-                                <div>
-                                    <label className="flex flex-col gap-2">
-                                        <span className="font-bold">Crie uma senha</span>
-                                        <input className="p-2 border-2 border-solid rounded-md focus:border-solid focus:border-neutral-500 focus:border-2 border-neutral-200 placeholder:text-neutral-500" 
-                                        type={!isVisible? 'password' : 'text'} placeholder="********"  required={true} minLength={6} maxLength={30}
-                                        ref={passRef}/>
-                                    </label>
-                                    <button className="mt-4 text-xl" type="button" disabled={loadingButton}
-                                        onClick={()=>setIsVisible(!isVisible)}>
-                                            {!isVisible ?(
-                                                <AiOutlineEyeInvisible/>
-                                            ):( 
-                                                <IoEyeSharp/>
-                                            )}
-                                    </button>
-                                </div>
-                                <div>
-                                    <label className="flex flex-col gap-2">
-                                        <span className="font-bold">Confirme sua senha</span>
-                                        <input className="p-2 border-2 border-solid rounded-md focus:border-solid focus:border-neutral-500 focus:border-2 border-neutral-200 placeholder:text-neutral-500" 
-                                        type={!isVisible? 'password' : 'text'} placeholder="********"  required={true} minLength={6} maxLength={30}
-                                        ref={confirmPassRef}/>
-                                    </label>
-                                    <button className="mt-4 text-xl" type="button" disabled={loadingButton}
-                                        onClick={()=>setIsVisible(!isVisible)}>
-                                            {!isVisible ?(
-                                                <AiOutlineEyeInvisible/>
-                                            ):( 
-                                                <IoEyeSharp/>
-                                            )}
-                                    </button>
-                                </div>
-                                {!loadingButton?(
-                                    <button className="p-3 font-semibold text-white duration-200 rounded-md bg-main hover:bg-maindark" 
-                                    type="submit">Cadastrar</button>
-                                ):(
-                                    <FaSpinner className="self-center text-xl text-main animate-spin"/>
-                                )}
+                                <Input text="Crie uma senha" type="password" placeholder="********"
+                                required={true} minLength={6} maxLength={30} ref={passRef}/>
+
+                                <Input text="Confirme sua senha" type="password" placeholder="********"
+                                required={true} minLength={6} maxLength={30} ref={confirmPassRef}/>
+
+                                <ButtonGreen disabled={loadingButton}>
+                                    Cadastrar
+                                </ButtonGreen>
                             </>
                             
                         )}
