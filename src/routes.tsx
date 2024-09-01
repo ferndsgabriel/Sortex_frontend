@@ -16,6 +16,8 @@ import Start from "./Pages/Start";
 import Account from "./Pages/Account";
 import Sociais from "./Pages/Sociais";
 import Settings from "./Pages/Settings";
+import Products from "./Pages/Products";
+import ProductsDetails from "./Pages/ProductsDetails";
 
 const RoutesApp = ()=>{
 
@@ -29,6 +31,8 @@ const RoutesApp = ()=>{
                         <Route path="/account" element={<Account />} />
                         <Route path="/sociais" element={<Sociais />} />
                         <Route path="/settings" element={<Settings />} />
+                        <Route path="/products" element={<Products />} />
+                        <Route path="/products/:id" element={<ProductsDetails/>} />
                     </>
                 ):(
                     <>

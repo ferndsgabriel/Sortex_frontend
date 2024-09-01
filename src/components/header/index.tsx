@@ -40,7 +40,6 @@ export default function Header(){
         }
     }
     
-    console.log(user?.photo)
     return(
         <>
             <header className="fixed top-0 left-0 z-40 flex items-center justify-between w-full h-16 p-4 bg-main lg:hidden">
@@ -75,7 +74,7 @@ export default function Header(){
                         </Link>
                     </li>
                     <li className="w-full">
-                        <Link to={'/'} className="flex items-center w-full h-16 gap-4 text-white duration-200 hover:bg-maindark group">
+                        <Link to={'/products'} className="flex items-center w-full h-16 gap-4 text-white duration-200 hover:bg-maindark group">
                             <div className="flex items-center justify-center h-full text-2xl shadow-md group-hover:shadow-black bg-maindark aspect-square">
                                 <AiFillProduct/>
                             </div>
