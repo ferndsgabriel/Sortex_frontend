@@ -1,7 +1,5 @@
 import { AiOutlinePlus } from "react-icons/ai";
 import {toast} from "react-toastify";
-import CurrencyConverter from "../../utils/currencyConverter";
-import PriceToNumber from "../../utils/priceToNumber";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -23,7 +21,6 @@ interface ProductsProps{
     description:string;
     name:string;
     photos:string;
-    price:number;
     _id:string;
 }
 
@@ -34,7 +31,6 @@ export default function Products(){
     const [imagesSend, setImagesSend] = useState<string[]>([]);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
     const [isLoadingCreate, setIsLoadingCreate] = useState(false);
     const [isVisibleCreate, setIsVisibleCreate] = useState(true);
     const [products, setProducts] = useState<ProductsProps[]>([]);
@@ -77,20 +73,13 @@ export default function Products(){
 
         const dataImage = new FormData();
         
-        if (!(name || description || price) || imagesSend.length < 1){
+        if (!(name || description) || imagesSend.length < 1){
             toast.warning('Preencha todos os campos');
             return;
         }
         
-        const formatPrice = PriceToNumber(price);
-
-        if (formatPrice < 0.01){
-            toast.warning('Preço inválido');
-            return;
-        }
 
         dataImage.append('name', name.trim());
-        dataImage.append('price', formatPrice.toString().trim());
         dataImage.append('description',description.trim());  
     
         imagesSend.forEach((item) => {
@@ -101,7 +90,6 @@ export default function Products(){
 
         try {
             const response = await api.post('/produtos', dataImage);
-            setPrice('');
             setName('');
             setDescription('');
             setImagesSend([]);
@@ -115,9 +103,6 @@ export default function Products(){
         }
     }
     
-    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-        setPrice(CurrencyConverter(e));
-    };
     
     useEffect(()=>{
         async function getProducts(){
@@ -154,9 +139,9 @@ export default function Products(){
                         <h2 className="text-xl font-semibold">Cadastrar novo produto</h2>
                         <button onClick={()=>setIsVisibleCreate(!isVisibleCreate)} className="text-xl text-neutral-500">
                             {isVisibleCreate?(
-                                <FaAngleDown/>
-                            ):(
                                 <FaAngleUp/>
+                            ):(
+                                <FaAngleDown/>
                             )}
                         </button>
                     </div>
@@ -165,8 +150,6 @@ export default function Products(){
                         <Input text="Nome do Produto" placeholder="Digite o nome do produto"
                         type="text" minLength={3} maxLength={30} required={true} value={name} onChange={(e)=>setName(e.target.value)}/>
                         <TextArea text="Descrição" minLength={20} maxLength={1000} placeholder="Adicione uma descrição detalhada do produto" value={description} onChange={(e)=>setDescription(e.target.value)}/>
-                        <Input type="tel" text="Preço por rifa" placeholder="Digite o preço por rifa" value={price} onChange={handleChange}/>
-
                         <div>
                             <span className="my-6 font-bold">Foto do produto</span>
                             <div className="grid w-full grid-cols-2 gap-6 mt-4 lg:grid-cols-3 2xl:grid-cols-4">
