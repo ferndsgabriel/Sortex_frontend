@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import ImagePreview from "../../components/ui/imagePreview";
 import ButtonGreen from "../../components/ui/buttonGreen";
 import LoadingPage from "../../components/loading";
-import BuyRafflesModal from "../../components/modals/raffles/buyRaffles";
+//import BuyRafflesModal from "../../components/modals/raffles/buyRaffles";
 import ContainerPages from "../../components/ui/containerPages";
 import Header from "../../components/header";
 
@@ -44,7 +44,7 @@ export default function SortexDetails(){
     const api = SetupApi();
     const [raffle, setRaffle] = useState <raffleProps | null>(null);
     const [isOpenPreview, setIsOpenPreview] = useState(false);
-    const [isOpenRaffles, setIsOpenRaffles] = useState(false);
+   // const [isOpenRaffles, setIsOpenRaffles] = useState(false);
 
     useEffect(()=>{
         
@@ -83,7 +83,7 @@ export default function SortexDetails(){
     }
 
     
-    async function changeRaffleStatus(value:boolean){
+    /*async function changeRaffleStatus(value:boolean){
         try {
             
         } catch (error) {
@@ -91,7 +91,7 @@ export default function SortexDetails(){
         }finally{
             
         }
-    }
+    }*/
 
     return(
         <>
@@ -146,11 +146,11 @@ export default function SortexDetails(){
                                                 </ButtonGreen>
                                             )
                                         )}
-                                        <ButtonGreen className="w-full mt-2 text-black bg-white border-2 border-neutral-300 hover:bg-neutral-200" 
+                                        <ButtonGreen disabled={false} className="w-full mt-2 text-black bg-white border-2 border-neutral-300 hover:bg-neutral-200" 
                                         textColor="text-black">Editar Informações</ButtonGreen>
                                     </div>
                                 ):(
-                                    <ButtonGreen className="w-full bg-red-600 hover:bg-red-500">Excluir Sorteio</ButtonGreen>
+                                    <ButtonGreen disabled={false} className="w-full bg-red-600 hover:bg-red-500">Excluir Sorteio</ButtonGreen>
                                 )}
 
 
