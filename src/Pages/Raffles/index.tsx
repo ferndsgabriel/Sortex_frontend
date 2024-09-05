@@ -87,8 +87,6 @@ export default function Raffles(){
     if (loading){
         return <LoadingPage/>
     }
-
-    console.log(id)
     
     return(
         <>
@@ -160,7 +158,7 @@ export default function Raffles(){
                                 ):(
                                     raffle.sortex.sortexStatus && (
                                         <ButtonGreen disabled={false}
-                                        className="bg-neutral-500 w-full hover:bg-neutral-500 cursor-not-allowed">
+                                        className="w-full cursor-not-allowed bg-neutral-500 hover:bg-neutral-500">
                                         Vendas encerradas
                                         </ButtonGreen>
                                     )

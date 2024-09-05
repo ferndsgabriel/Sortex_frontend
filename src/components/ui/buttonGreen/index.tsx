@@ -6,9 +6,10 @@ interface buttonProps  extends ButtonHTMLAttributes<HTMLButtonElement>{
     disabled:boolean;
     width?:string;
     className?:string;
+    textColor?:string;
 }
 
-export default function ButtonGreen({children, disabled, width, className, ...rest}:buttonProps){
+export default function ButtonGreen({children, disabled, width, className, textColor, ...rest}:buttonProps){
 
     if (disabled){
         return <FaSpinner className="self-center text-xl text-main animate-spin"/>
@@ -16,7 +17,7 @@ export default function ButtonGreen({children, disabled, width, className, ...re
 
     return(
         <button type='submit' disabled={disabled}
-        className={`w-${width? width : ''} p-3 font-semibold text-white duration-200 rounded-md bg-main hover:bg-maindark ${className}`}
+        className={`w-${width? width : ''} ${textColor? textColor : 'text-white'} p-3 font-semibold  duration-200 rounded-md bg-main hover:bg-maindark ${className}`}
         {...rest} >
             {children}
         </button>

@@ -71,7 +71,7 @@ export default function Account (){
                 <Title text="Vincular conta"/>
                 
                 {cardId?(
-                    <section className="flex flex-col w-full max-w-lg gap-8 py-4 m-auto shadow-lg mt-36 h-max">
+                    <section className="flex flex-col w-full max-w-xl gap-8 p-4 py-4 m-auto border-2 rounded shadow-lg mt-36 h-max boder-solid border-neutral-200">
                     <h2 className="text-2xl font-semibold">
                         Conta bancária vinculada
                     </h2>
@@ -92,7 +92,7 @@ export default function Account (){
 
                 </section>
                 ):(
-                    <section className="flex flex-col w-full max-w-lg gap-8 p-4 py-4 m-auto bg-white shadow-lg mt-36 -500 h-max">
+                    <section className="flex flex-col w-full max-w-xl gap-8 p-4 py-4 m-auto border-2 rounded shadow-lg mt-36 h-max boder-solid border-neutral-200">
                         <h2 className="text-2xl font-semibold">
                             Vincule sua conta bancária do mercado pago
                         </h2>
@@ -100,10 +100,13 @@ export default function Account (){
                         >Escaneie o código QR fornecido para vincular sua conta do mercado pago e começar a receber pagamentos de rifas</p>
                         
                         {linkedAccount && (
-                            <div className="flex items-center justify-center w-full">
+                            <div className="flex flex-col items-center justify-center w-full gap-2">
                                 <QRCodeSVG value={linkedAccount}/>
+
+                                <a target="_blank" className="text-xl text-blue-500 underline" href={linkedAccount}>Acessar link</a>
                             </div>
                         )}
+                        
                         
                         <ButtonGreen onClick={createQrCode} disabled={loadingButton}>
                             Gerar QRcode

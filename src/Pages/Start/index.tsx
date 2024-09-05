@@ -216,7 +216,7 @@ export default function Start(){
     }
     
     function navigatePage(getId:string){
-        //navigate('//') pagina de detalhes
+        navigate(`/sortex/${getId}`)
     }
 
     const RepaginationInProgress = () => {

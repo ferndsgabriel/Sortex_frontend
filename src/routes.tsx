@@ -18,6 +18,7 @@ import Sociais from "./Pages/Sociais";
 import Settings from "./Pages/Settings";
 import Products from "./Pages/Products";
 import ProductsDetails from "./Pages/ProductsDetails";
+import SortexDetails from "./Pages/SortexDetails";
 
 // ambos
 import Raffles from "./Pages/Raffles";
@@ -37,6 +38,7 @@ const RoutesApp = ()=>{
                         <Route path="/products" element={<Products />} />
                         <Route path="/products/:id" element={<ProductsDetails/>} />
                         <Route path="/raffles/:id" element={<Raffles/>} />
+                        <Route path="/sortex/:id" element={<SortexDetails/>} />
                     </>
                 ):(
                     <>
