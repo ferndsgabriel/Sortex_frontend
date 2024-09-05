@@ -5,9 +5,11 @@ import { parseCookies } from "nookies";
 export const SetupApi= (ctx = undefined) =>{
 
     const cookies = parseCookies(ctx);
-    
+
+    const baseUrl = import.meta.env.VITE_APP_BASEURL;
+
     const api = axios.create({
-        baseURL:'http://localhost:3333',
+        baseURL:baseUrl,
         headers:{
             Authorization: `Bearer ${cookies['@Sortex']}`
         }

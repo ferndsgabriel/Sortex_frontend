@@ -9,6 +9,8 @@ export default {
       colors:{
         'main':'#28774C',
         'maindark':'#1C5335',
+        'mainLight':'#EDFFF5',
+        'mainLight2':'#E3FFF0',
       },
       keyframes:{
         'openNav':{

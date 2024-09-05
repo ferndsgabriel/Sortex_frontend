@@ -19,6 +19,9 @@ import Settings from "./Pages/Settings";
 import Products from "./Pages/Products";
 import ProductsDetails from "./Pages/ProductsDetails";
 
+// ambos
+import Raffles from "./Pages/Raffles";
+
 const RoutesApp = ()=>{
 
     const {isAuthenticated} = useContext(AuthContext);
@@ -33,6 +36,7 @@ const RoutesApp = ()=>{
                         <Route path="/settings" element={<Settings />} />
                         <Route path="/products" element={<Products />} />
                         <Route path="/products/:id" element={<ProductsDetails/>} />
+                        <Route path="/raffles/:id" element={<Raffles/>} />
                     </>
                 ):(
                     <>
@@ -41,6 +45,7 @@ const RoutesApp = ()=>{
                         <Route path="/signup" element={<Cadastrar />} />
                         <Route path="/recovery" element={<Recovery />} />
                         <Route path="/recovery/:cod/:id" element={<ChangePass/>} />
+                        <Route path="/raffles/:id" element={<Raffles/>} />
                     </>
                 )}
         </Routes>

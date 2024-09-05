@@ -6,6 +6,7 @@ import { setCookie, parseCookies, destroyCookie } from "nookies";
 import zxcvbn from 'zxcvbn';
 import LoadingPage from "../components/loading";
 
+
 type AuthContextData = {
     handleLogin:(credentials:LoginProps)=> Promise <void>;
     handleRegister:(credentials:SignupProps) => Promise <void>;

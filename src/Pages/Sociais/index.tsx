@@ -58,10 +58,11 @@ export default function Sociais(){
     async function handleChange(e:FormEvent) {
         e.preventDefault();
 
-        const regexInsta = /^(https?:\/\/)?(www\.)?instagram\.com\/[a-zA-Z0-9._]+\/?$/;
-        const regexTk = /^(https?:\/\/)?(www\.)?(tiktok\.com\/@([a-zA-Z0-9._-]+)\/?)$/;
-        const regexYoutube = /^(https?:\/\/)?(www\.)?(youtube\.com\/@([a-zA-Z0-9._-]+)\/?)$/;
-        const regexTwitch =  /^(https?:\/\/)?(www\.)?(twitch\.tv\/([a-zA-Z0-9._-]+)\/?)$/;
+        const regexInsta = /^instagram\.com\/[a-zA-Z0-9._]+\/?$/;
+        const regexTk = /^tiktok\.com\/@([a-zA-Z0-9._-]+)\/?$/;
+        const regexYoutube = /^youtube\.com\/@([a-zA-Z0-9._-]+)\/?$/;
+        const regexTwitch = /^twitch\.tv\/([a-zA-Z0-9._-]+)\/?$/;
+        
         
         if (insta && !(regexInsta.test(insta))){
             toast.warning('Digite um link válido do instagram'); 

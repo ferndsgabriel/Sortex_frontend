@@ -2,7 +2,7 @@ import { FormEvent, FormHTMLAttributes, ReactNode } from "react"
 
 interface FormModalProps extends FormHTMLAttributes <HTMLFormElement> { 
     children:ReactNode;
-    onSubmit:(e:FormEvent)=>Promise<void>;
+    onSubmit?:(e:FormEvent)=>Promise<void>;
     className?:string;
 }
 

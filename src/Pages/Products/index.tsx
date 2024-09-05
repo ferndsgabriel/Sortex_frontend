@@ -32,9 +32,28 @@ export default function Products(){
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [isLoadingCreate, setIsLoadingCreate] = useState(false);
-    const [isVisibleCreate, setIsVisibleCreate] = useState(true);
     const [products, setProducts] = useState<ProductsProps[]>([]);
+    const [isVisibleCreate, setIsVisibleCreate] = useState(true);
+    
+    useEffect(()=>{
+        async function getProducts(){
+            try {
+                const response = await api.get('/produtos');
+                setProducts(response.data);
+                if (response.data.length > 0){
+                    setIsVisibleCreate(false);
+                }
+            } catch (error) {
+                console.log(error);
+            }finally{
+                setLoading(false);
+            }
+        }
+        getProducts();
+    },[]);
+    
 
+    
     function handleImages(e: React.ChangeEvent<HTMLInputElement>) {
         const listImagesView:any = [];
         const listImagesSend:any = [];
@@ -103,27 +122,16 @@ export default function Products(){
         }
     }
     
-    
-    useEffect(()=>{
-        async function getProducts(){
-            try {
-                const response = await api.get('/produtos');
-                setProducts(response.data);
-            } catch (error) {
-                console.log(error);
-            }finally{
-                setLoading(false);
-            }
-        }
-        getProducts();
-    },[]);
-        
+
     const productsSort = products.sort((a, b) => {
         const dataA = new Date(a.createDate).getTime();
         const dataB = new Date(b.createDate).getTime();
         return dataB - dataA; 
     });
+        
 
+
+    
     if (loading){
         return <LoadingPage/>
     }
@@ -134,7 +142,7 @@ export default function Products(){
             <ContainerPages>
                 <Title text="Produtos"/>
                 
-                <section className="p-4 mt-12 shadow-lg shadow-neutral-300">
+                <section className="pb-4 border-b-2 border-solid border-neutral-300">
                     <div className="flex items-center justify-between w-full gap-2">
                         <h2 className="text-xl font-semibold">Cadastrar novo produto</h2>
                         <button onClick={()=>setIsVisibleCreate(!isVisibleCreate)} className="text-xl text-neutral-500">
@@ -148,8 +156,8 @@ export default function Products(){
                     {isVisibleCreate &&(
                     <form className="flex flex-col gap-4 mt-6" onSubmit={createProduct}>
                         <Input text="Nome do Produto" placeholder="Digite o nome do produto"
-                        type="text" minLength={3} maxLength={30} required={true} value={name} onChange={(e)=>setName(e.target.value)}/>
-                        <TextArea text="Descrição" minLength={20} maxLength={1000} placeholder="Adicione uma descrição detalhada do produto" value={description} onChange={(e)=>setDescription(e.target.value)}/>
+                        type="text" minLength={3} maxLength={60} required={true} value={name} onChange={(e)=>setName(e.target.value)}/>
+                        <TextArea text="Descrição" minLength={20} required={true} maxLength={1000} placeholder="Adicione uma descrição detalhada do produto" value={description} onChange={(e)=>setDescription(e.target.value)}/>
                         <div>
                             <span className="my-6 font-bold">Foto do produto</span>
                             <div className="grid w-full grid-cols-2 gap-6 mt-4 lg:grid-cols-3 2xl:grid-cols-4">
@@ -179,7 +187,7 @@ export default function Products(){
                 </section>
                 
                 {products.length > 0 &&(
-                <section className="p-4 mt-4">
+                <section className="mt-12">
                     <h2 className="text-xl font-semibold">Produtos Cadastrados</h2>
                     <div className="grid grid-cols-1 gap-4 mt-6 md:grid-cols-2 2xl:grid-cols-3">
                         {productsSort.map((item)=>{

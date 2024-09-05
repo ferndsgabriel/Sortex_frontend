@@ -28,7 +28,7 @@ export default function Modal({isOpen, children, closeModal}:modalProps){
 
     return(
         <>
-            <div className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-screen p-8 bg-black opacity-30" onClick={closeModal}/> 
+            <div className="fixed top-0 left-0 z-50 flex items-center justify-center w-full h-screen p-8 bg-black opacity-60" onClick={closeModal}/> 
             {children}
         </>
     )

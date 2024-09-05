@@ -193,7 +193,7 @@ export default function ProductsDetails(){
 
                             <form className="flex flex-col gap-4 mt-6" onSubmit={handleUpdate}>
                                 <Input text="Nome do Produto" placeholder="Digite o nome do produto" disabled={!isEditable}
-                                type="text" minLength={3} maxLength={30} required={true} value={name} onChange={(e)=>setName(e.target.value)}/>
+                                type="text" minLength={3} maxLength={60} required={true} value={name} onChange={(e)=>setName(e.target.value)}/>
                                 
                                 <TextArea text="Descrição" minLength={20} maxLength={1000}  disabled={!isEditable} required={true}
                                 placeholder="Adicione uma descrição detalhada do produto" value={description} onChange={(e)=>setDescription(e.target.value)}/>

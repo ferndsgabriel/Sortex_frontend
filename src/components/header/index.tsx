@@ -42,7 +42,7 @@ export default function Header(){
     
     return(
         <>
-            <header className="fixed top-0 left-0 z-40 flex items-center justify-between w-full h-16 p-4 bg-main lg:hidden">
+            <header className="fixed top-0 left-0 z-50 flex items-center justify-between w-full h-16 p-4 bg-main lg:hidden">
 
                 <button onClick={openNav} 
                 className="text-2xl text-white">
@@ -54,10 +54,10 @@ export default function Header(){
             </header>
 
             <div ref={backgroundRef} onClick={closeNav}
-            className="fixed top-0 left-0 hidden w-full h-screen bg-black opacity-35 lg:hidden"/>
+            className="fixed top-0 left-0 z-50 hidden w-full h-screen bg-black opacity-35 lg:hidden"/>
 
 
-            <nav className="fixed top-0 left-0 z-40 flex-col items-start hidden h-screen p-0 shadow-2xl bg-main w-80 lg:animate-none lg:flex" 
+            <nav className="fixed top-0 left-0 z-50 flex-col items-start hidden h-screen p-0 shadow-2xl bg-main w-80 lg:animate-none lg:flex" 
             ref={navRef}>
 
                 <button onClick={closeNav} className="flex items-center justify-center w-16 h-16 p-4 text-white bg-maindark lg:hidden">
