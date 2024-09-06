@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { SetupApi } from "../../services";
 import { useParams } from "react-router-dom";
 
 import ImagePreview from "../../components/ui/imagePreview";
 import ButtonGreen from "../../components/ui/buttonGreen";
 import LoadingPage from "../../components/loading";
-//import BuyRafflesModal from "../../components/modals/raffles/buyRaffles";
 import ContainerPages from "../../components/ui/containerPages";
 import Header from "../../components/header";
+import RaffleStatusModal from "../../components/modals/sortex/raffleStatus";
+
 
 interface raffleProps{
     creator:{
@@ -44,7 +45,18 @@ export default function SortexDetails(){
     const api = SetupApi();
     const [raffle, setRaffle] = useState <raffleProps | null>(null);
     const [isOpenPreview, setIsOpenPreview] = useState(false);
-   // const [isOpenRaffles, setIsOpenRaffles] = useState(false);
+    const [isOpenRafflesStatus, setIsOpenRafflesStatus] = useState(false);
+    const [raffleStatus, setRaffleStatus] = useState(false);
+
+
+    const openRaflesStatus = useCallback((value:boolean)=>{
+        setRaffleStatus(value);
+        setIsOpenRafflesStatus(true);
+    },[isOpenRafflesStatus]);
+
+    const closeRaflesStatus = useCallback(()=>{
+        setIsOpenRafflesStatus(false);
+    },[isOpenRafflesStatus]);
 
     useEffect(()=>{
         
@@ -64,7 +76,8 @@ export default function SortexDetails(){
             }
         }
         getRaffle();
-    },[]);
+
+    },[ closeRaflesStatus]);
 
     function openPreview(){
         setIsOpenPreview(true);
@@ -82,16 +95,6 @@ export default function SortexDetails(){
         return <LoadingPage/>
     }
 
-    
-    /*async function changeRaffleStatus(value:boolean){
-        try {
-            
-        } catch (error) {
-            
-        }finally{
-            
-        }
-    }*/
 
     return(
         <>
@@ -137,12 +140,16 @@ export default function SortexDetails(){
                                     <div className="w-full">
                                         {raffle.sortex.rafflesStatus?(
                                             <ButtonGreen 
-                                            className="w-full" disabled={false}>Parar venda de rifas</ButtonGreen>
+                                            onClick={()=>openRaflesStatus(false)}
+                                            className="w-full" disabled={false}>
+                                            Desativar vendas de rifas
+                                            </ButtonGreen>
                                         ):(
                                             raffle.sortex.sortexStatus && (
                                                 <ButtonGreen disabled={false}
+                                                onClick={()=>openRaflesStatus(true)}
                                                 className="w-full">
-                                                Ativar venda de rifas
+                                                Ativar vendas de rifas
                                                 </ButtonGreen>
                                             )
                                         )}
@@ -152,9 +159,6 @@ export default function SortexDetails(){
                                 ):(
                                     <ButtonGreen disabled={false} className="w-full bg-red-600 hover:bg-red-500">Excluir Sorteio</ButtonGreen>
                                 )}
-
-
-
                                 
                             </div>
                         </section>
@@ -165,6 +169,9 @@ export default function SortexDetails(){
             {raffle && (
                 <>
                     <ImagePreview photos={raffle.product.photos} isOpen={isOpenPreview} onClose={closePreview}/>
+                    
+                    <RaffleStatusModal isOpen={isOpenRafflesStatus} id={raffle.sortex._id} 
+                    closeModal={closeRaflesStatus} status={raffleStatus}/>
                 </>
 
             )}
